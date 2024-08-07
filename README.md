@@ -1,6 +1,6 @@
-# AsyncPool 🌊
+# StreamingPool 🌊
 
-AsyncPool is a Python library that allow user to implement custom pipelines to treat datas asynchronously. \
+StreamingPool is a Python library that allow user to implement custom pipelines to treat datas asynchronously. \
 You can add and treat datas at the same time based on Python's `concurrent.futures.ThreadPoolExecutor` class.
 
 ## Available pools 🐋
@@ -13,7 +13,7 @@ You can add and treat datas at the same time based on Python's `concurrent.futur
 First you'll need to implement your own pool to describe the logic that you want :
 
 ```py
-from AsyncPool import FIFOPool
+from streamingpool import FIFOPool
 
 class SamplePool(FIFOPool[int]):
     """
@@ -59,7 +59,7 @@ pool.stop() # Stop the pool when all it's data have been treated (block the thre
 ## Creating your own pool 🐬
 As it have been said before, you can also implement your own pooling logic.
 ```py
-from AsyncPool import BasePool, TSegment
+from streamingpool import BasePool, TSegment
 
 class ListPool(BasePool[TSegment]):
     __buffer: list
