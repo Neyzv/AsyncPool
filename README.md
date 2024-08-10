@@ -59,7 +59,7 @@ pool.stop() # Stop the pool when all it's data have been treated (block the thre
 ## Creating your own pool 🐬
 As it have been said before, you can also implement your own pooling logic.
 ```py
-from streamingpool import BasePool
+from streamingpool import BasePool, Discard
 
 class ListPool(BasePool[int]):
     __buffer: list
@@ -74,8 +74,11 @@ class ListPool(BasePool[int]):
     def enqueue_segment(self, datas: int) -> None:
         self.__buffer.append(datas)
 
-    def retrieve_segment(self) -> int:
-        return self.__buffer.pop()
+    def retrieve_segment(self) -> int | Discard:
+        try:
+            return self.__buffer.pop()
+        except IndexError:
+            return Discard()
 
     def is_empty(self) -> bool:
         return len(self.__buffer) == 0

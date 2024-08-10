@@ -4,6 +4,7 @@ from time import sleep
 from typing import Generic
 
 from ..genericity.t_segment import TSegment
+from ..models.discard import Discard
 
 
 class BasePool(Generic[TSegment]):
@@ -37,12 +38,12 @@ class BasePool(Generic[TSegment]):
         pass
 
     @abstractmethod
-    def retrieve_segment(self) -> TSegment:
+    def retrieve_segment(self) -> TSegment | Discard:
         """
         Retrieve a segment from the pool
 
         Returns:
-            TSegment: The segment
+            TSegment | Discard: The segment or a Discard object if it must be ignored
         """
         pass
 
@@ -68,10 +69,10 @@ class BasePool(Generic[TSegment]):
         This method processes subsequences pushed into the pool
         """
         while not self.__stop_flag:
-            try:
-                self.process_segment(self.retrieve_segment())
-            except Exception:
-                continue
+            segment = self.retrieve_segment()
+
+            if not isinstance(segment, Discard):
+                self.process_segment()
 
     def start(self) -> None:
         """

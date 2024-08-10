@@ -1,7 +1,8 @@
-from queue import Queue
+from queue import Queue, Empty
 
 from .abstraction.basePool import BasePool
 from .genericity.t_segment import TSegment
+from .models.discard import Discard
 
 
 class FIFOPool(BasePool[TSegment]):
@@ -17,8 +18,11 @@ class FIFOPool(BasePool[TSegment]):
     def enqueue_segment(self, datas: TSegment) -> None:
         self.__buffer.put(datas)
 
-    def retrieve_segment(self) -> TSegment:
-        return self.__buffer.get(timeout=1)
+    def retrieve_segment(self) -> TSegment | Discard:
+        try:
+            return self.__buffer.get(timeout=1)
+        except Empty:
+            return Discard()
 
     def is_empty(self) -> bool:
         return self.__buffer.empty()
