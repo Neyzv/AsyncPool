@@ -87,7 +87,7 @@ class BasePool(Generic[TSegment]):
         """
         if self.__running_task:
             self.__stop_flag = True
-            self.__running_task.cancel()
+            self.__running_task.result()
             self.__running_task = None
 
     def dispose(self) -> None:
