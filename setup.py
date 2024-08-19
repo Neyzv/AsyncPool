@@ -5,7 +5,7 @@ this_directory = Path(__file__).parent
 
 setup(
     name = "streamingpool",
-    version = "1.1.1",
+    version = "1.1.2",
     author="Neyzu",
     packages = find_packages(),
     install_requires = [

@@ -72,7 +72,7 @@ class BasePool(Generic[TSegment]):
             segment = self.retrieve_segment()
 
             if not isinstance(segment, Discard):
-                self.process_segment()
+                self.process_segment(segment)
 
     def start(self) -> None:
         """
