@@ -66,9 +66,6 @@ class ListPool(BasePool[int]):
 
     def __init__(self):
         super().__init__()
-
-    def __init__(self):
-        super().__init__()
         self.__buffer = list()
 
     def enqueue_segment(self, datas: int) -> None:
